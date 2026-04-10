@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unit Kataloğu</title>
+<title>Respawn Hub - Unit Kataloğu</title>
 
 <style>
 body {
@@ -20,24 +20,35 @@ body {
   padding: 20px;
 }
 
-/* GRID */
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input, select {
+  padding: 8px;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+}
+
 .unit-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 10px;
 }
 
-/* KART */
 .unit {
+  position: relative;
   background: #1a1a1a;
   cursor: pointer;
   border-radius: 6px;
   overflow: hidden;
-  transition: 0.2s;
 }
 
-.unit:hover {
-  transform: scale(1.05);
+.unit.selected {
+  outline: 2px solid #5865F2;
 }
 
 .unit img {
@@ -46,7 +57,13 @@ body {
   object-fit: cover;
 }
 
-/* DETAY KART */
+.fav {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
 .detail {
   margin-top: 30px;
   background: #161616;
@@ -58,20 +75,12 @@ body {
 
 .detail img {
   width: 200px;
-  border-radius: 8px;
-}
-
-.detail-info h2 {
-  margin-top: 0;
 }
 
 .tag {
-  display: inline-block;
   background: #333;
   padding: 5px 10px;
   margin-right: 5px;
-  border-radius: 4px;
-  font-size: 12px;
 }
 </style>
 
@@ -83,66 +92,112 @@ body {
 
 <h1>Unit Kataloğu</h1>
 
-<div class="unit-grid">
-
-<!-- UNIT -->
-
-<div class="unit" onclick="showUnit(this)"
-data-name="Tercio Arquebusiers"
-data-tier="T5"
-data-type="Ranged"
-data-desc="Yüksek hasar. Yavaş ama güçlü."
-data-img="tercio.jpg">
-<img src="tercio.jpg">
+<div class="controls">
+<input type="text" id="search" placeholder="Ara...">
+<select id="tierFilter">
+<option value="">Tüm Tier</option>
+<option value="T3">T3</option>
+<option value="T4">T4</option>
+<option value="T5">T5</option>
+</select>
 </div>
 
-<div class="unit" onclick="showUnit(this)"
-data-name="Prefecture Guards"
-data-tier="T3"
-data-type="Melee"
-data-desc="Hızlı. Ucuz. Erken oyunda güçlü."
-data-img="prefecture.jpg">
-<img src="prefecture.jpg">
+<div class="unit-grid" id="grid">
+
+<div class="unit" data-id="tercio" data-name="Tercio Arquebusiers" data-tier="T5" data-desc="Yüksek hasar." data-img="tercio.jpg">
+<img src="tercio.jpg" loading="lazy">
+<div class="fav">☆</div>
 </div>
 
-<div class="unit" onclick="showUnit(this)"
-data-name="Namkhan Archers"
-data-tier="T4"
-data-type="Ranged"
-data-desc="Bleed hasarı ile öne çıkar."
-data-img="namkhan.jpg">
-<img src="namkhan.jpg">
+<div class="unit" data-id="pref" data-name="Prefecture Guards" data-tier="T3" data-desc="Hızlı ve ucuz." data-img="pref.jpg">
+<img src="pref.jpg" loading="lazy">
+<div class="fav">☆</div>
+</div>
+
+<div class="unit" data-id="namkhan" data-name="Namkhan Archers" data-tier="T4" data-desc="Bleed hasarı." data-img="namkhan.jpg">
+<img src="namkhan.jpg" loading="lazy">
+<div class="fav">☆</div>
 </div>
 
 </div>
 
-<!-- DETAY -->
-
-<div class="detail" id="detailBox">
-<img src="tercio.jpg" id="detailImg">
-
-<div class="detail-info">
-<h2 id="detailName">Tercio Arquebusiers</h2>
-
+<div class="detail" id="detail">
+<img id="dImg" src="tercio.jpg">
 <div>
-<span class="tag" id="detailTier">T5</span>
-<span class="tag" id="detailType">Ranged</span>
+<h2 id="dName">Seç</h2>
+<div>
+<span class="tag" id="dTier"></span>
 </div>
-
-<p id="detailDesc">Yüksek hasar. Yavaş ama güçlü.</p>
+<p id="dDesc"></p>
 </div>
-
 </div>
 
 </div>
 
 <script>
-function showUnit(el) {
-  document.getElementById("detailName").innerText = el.dataset.name;
-  document.getElementById("detailTier").innerText = el.dataset.tier;
-  document.getElementById("detailType").innerText = el.dataset.type;
-  document.getElementById("detailDesc").innerText = el.dataset.desc;
-  document.getElementById("detailImg").src = el.dataset.img;
+const units = document.querySelectorAll(".unit");
+const search = document.getElementById("search");
+const tier = document.getElementById("tierFilter");
+
+let favs = JSON.parse(localStorage.getItem("favs")) || [];
+
+function updateFavUI() {
+  units.forEach(u=>{
+    const star = u.querySelector(".fav");
+    star.innerText = favs.includes(u.dataset.id) ? "★" : "☆";
+  });
+}
+
+updateFavUI();
+
+units.forEach(u=>{
+  u.onclick = ()=>{
+    document.querySelectorAll(".unit").forEach(x=>x.classList.remove("selected"));
+    u.classList.add("selected");
+
+    document.getElementById("dName").innerText = u.dataset.name;
+    document.getElementById("dTier").innerText = u.dataset.tier;
+    document.getElementById("dDesc").innerText = u.dataset.desc;
+    document.getElementById("dImg").src = u.dataset.img;
+
+    history.replaceState(null, "", "?unit=" + u.dataset.id);
+  };
+
+  u.querySelector(".fav").onclick = (e)=>{
+    e.stopPropagation();
+    const id = u.dataset.id;
+
+    if(favs.includes(id)){
+      favs = favs.filter(x=>x!==id);
+    } else {
+      favs.push(id);
+    }
+
+    localStorage.setItem("favs", JSON.stringify(favs));
+    updateFavUI();
+  };
+});
+
+search.oninput = filter;
+tier.onchange = filter;
+
+function filter(){
+  const s = search.value.toLowerCase();
+
+  units.forEach(u=>{
+    const matchText = u.dataset.name.toLowerCase().includes(s);
+    const matchTier = !tier.value || u.dataset.tier === tier.value;
+
+    u.style.display = (matchText && matchTier) ? "block" : "none";
+  });
+}
+
+const params = new URLSearchParams(window.location.search);
+const unitId = params.get("unit");
+
+if(unitId){
+  const el = document.querySelector(`[data-id="${unitId}"]`);
+  if(el) el.click();
 }
 </script>
 
