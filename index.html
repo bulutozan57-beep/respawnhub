@@ -1,184 +1,44 @@
-<!DOCTYPE html>
-
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Respawn Hub Türkiye</title>
-
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0b0b;
-  color: #fff;
-}
-
-/* HEADER */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background: #111;
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-nav a {
-  color: #aaa;
-  margin-left: 20px;
-  text-decoration: none;
-}
-
-nav a:hover {
-  color: #fff;
-}
-
-/* LAYOUT */
-.container {
-  display: flex;
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-  gap: 20px;
-}
-
-.main {
-  flex: 3;
-}
-
-.sidebar {
-  flex: 1;
-}
-
-/* UNIT SCROLL */
-.unit-scroll {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  margin-bottom: 30px;
-}
-
-.unit-card {
-  min-width: 100px;
-  height: 100px;
-  background: #1a1a1a;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
-  font-size: 12px;
-}
-
-/* ARTICLES */
-.article {
-  background: #161616;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-}
-
-.article h3 {
-  margin: 0 0 10px 0;
-}
-
-.article p {
-  color: #bbb;
-}
-
-/* SIDEBAR */
-.widget {
-  background: #161616;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-}
-
-.widget h4 {
-  margin-top: 0;
-}
-
-.btn {
-  display: block;
-  background: #5865F2;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  border-radius: 6px;
-  text-decoration: none;
-}
-</style>
-
-</head>
-
-<body>
-
-<header>
-  <div class="logo">Respawn Hub</div>
-  <nav>
-    <a href="#">Ana Sayfa</a>
-    <a href="#">Rehber</a>
-    <a href="#">İnceleme</a>
-    <a href="#">Meta Dışı</a>
-  </nav>
-</header>
-
-<div class="container">
-
-  <div class="main">
-
-```
-<h2>Birim Kataloğu</h2>
+<!-- UNIT KARTLAR -->
 
 <div class="unit-scroll">
-  <div class="unit-card">Unit 1</div>
-  <div class="unit-card">Unit 2</div>
-  <div class="unit-card">Unit 3</div>
-  <div class="unit-card">Unit 4</div>
-  <div class="unit-card">Unit 5</div>
-  <div class="unit-card">Unit 6</div>
+  <div class="unit-card" onclick="goster('tercio')">Tercio</div>
+  <div class="unit-card" onclick="goster('unit2')">Unit 2</div>
+  <div class="unit-card" onclick="goster('unit3')">Unit 3</div>
 </div>
 
-<div class="article">
-  <h3>Mızrak Build Rehberi</h3>
-  <p>En güncel mızrak build detayları ve kullanım önerileri.</p>
-</div>
+<!-- DETAY ALANI -->
 
-<div class="article">
-  <h3>Meta Dışı Birlik İncelemesi</h3>
-  <p>Az kullanılan ama güçlü birliklerin detaylı analizi.</p>
-</div>
-```
+<div id="detay" style="margin-top:20px;"></div>
 
-  </div>
+<script>
+function goster(unit) {
 
-  <div class="sidebar">
+  let veri = {
+    tercio: {
+      baslik: "Tercio Arquebusiers",
+      resim: "images/tercio.jpg",
+      icerik: "Yüksek hasar. Düşük mobilite. Doğru konumla oyunu taşır."
+    },
+    unit2: {
+      baslik: "Unit 2",
+      resim: "images/unit2.jpg",
+      icerik: "Örnek açıklama."
+    },
+    unit3: {
+      baslik: "Unit 3",
+      resim: "images/unit3.jpg",
+      icerik: "Örnek açıklama."
+    }
+  };
 
-```
-<div class="widget">
-  <h4>Popüler İçerikler</h4>
-  <p>En çok okunan rehberler</p>
-</div>
+  let secilen = veri[unit];
 
-<div class="widget">
-  <h4>Haftanın Build'i</h4>
-  <p>Öne çıkan setup</p>
-</div>
-
-<div class="widget">
-  <h4>Topluluk</h4>
-  <a href="https://discord.gg/e2bSpXCkbn" class="btn">Discord'a Katıl</a>
-</div>
-```
-
-  </div>
-
-</div>
-
-</body>
-</html>
+  document.getElementById("detay").innerHTML = `
+    <div style="background:#161616; padding:20px; border-radius:8px;">
+      <h2>${secilen.baslik}</h2>
+      <img src="${secilen.resim}" style="width:300px; margin-bottom:10px;">
+      <p>${secilen.icerik}</p>
+    </div>
+  `;
+}
+</script>
