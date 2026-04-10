@@ -7,77 +7,124 @@
 <title>Respawn Hub - Unit Kataloğu</title>
 
 <style>
-body { margin:0; font-family:Arial; background:#0b0b0b; color:#fff; }
-.container { max-width:1100px; margin:auto; padding:20px; }
+body {
+  margin:0;
+  font-family:Arial;
+  background:#0b0b0b;
+  color:#fff;
+}
 
-.controls { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
-input, select, button { padding:8px; background:#1a1a1a; color:#fff; border:none; }
+.container {
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
 
-.unit-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:10px; }
+/* CONTROLS */
+.controls {
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
 
-.unit { position:relative; background:#1a1a1a; border-radius:6px; overflow:hidden; cursor:pointer; }
-.unit.selected { outline:2px solid #fff; }
+input, select {
+  padding:8px;
+  background:#1a1a1a;
+  color:white;
+  border:none;
+}
 
-.unit img { width:100%; height:100px; object-fit:cover; }
-
-.tier { position:absolute; bottom:5px; left:5px; padding:3px 6px; font-size:12px; border-radius:4px; }
-.t1{background:#777;} .t2{background:#2ecc71;} .t3{background:#3498db;}
-.t4{background:#9b59b6;} .t5{background:#f1c40f;color:#000;}
-
-.fav { position:absolute; top:5px; right:5px; }
-
+/* GRID */
 .unit-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-  gap: 10px;
-  margin-bottom: 30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(90px,1fr));
+  gap:10px;
+  margin-bottom:30px;
 }
 
-/* DETAY FULL GENİŞLİK */
+.unit {
+  position:relative;
+  background:#1a1a1a;
+  border-radius:6px;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.unit.selected {
+  outline:2px solid #fff;
+}
+
+.unit img {
+  width:100%;
+  height:90px;
+  object-fit:cover;
+}
+
+/* TIER */
+.tier {
+  position:absolute;
+  bottom:5px;
+  left:5px;
+  font-size:11px;
+  padding:2px 6px;
+  border-radius:4px;
+}
+
+.t1{background:#777;}
+.t2{background:#2ecc71;}
+.t3{background:#3498db;}
+.t4{background:#9b59b6;}
+.t5{background:#f1c40f;color:#000;}
+
+.fav {
+  position:absolute;
+  top:5px;
+  right:5px;
+}
+
+/* DETAIL */
 .detail {
-  width: 100%;
-  background: #161616;
-  border-radius: 10px;
-  padding: 20px;
-  display: flex;
-  gap: 40px;
+  width:100%;
+  background:#161616;
+  border-radius:10px;
+  padding:20px;
+  display:flex;
+  gap:40px;
 }
 
-/* SOL METİN */
-.left {
-  flex: 2;
-}
-
-/* SAĞ PANEL */
-.right {
-  flex: 1;
-  max-width: 300px;
-}
+.left { flex:2; }
+.right { flex:1; max-width:300px; }
 
 .section { margin-bottom:15px; }
 .section h4 { margin:0 0 5px 0; color:#aaa; }
 
-.stat { margin-top:10px; }
-.bar { height:8px; background:#333; margin:5px 0; }
-.fill { height:100%; background:#2ecc71; }
-
+/* IMAGE */
 .right img {
-  width: 100%;
-  max-width: 250px;
-  display: block;
-  margin-bottom: 15px;
+  width:100%;
+  max-width:250px;
+  margin-bottom:15px;
 }
 
+/* STATS */
 .bar {
-  height: 8px;
-  background: #333;
-  margin-bottom: 10px;
+  height:8px;
+  background:#333;
+  margin-bottom:10px;
 }
 
 .fill {
-  height: 100%;
-  background: #2ecc71;
+  height:100%;
+  background:#2ecc71;
 }
+
+/* MOBILE */
+@media(max-width:768px){
+  .detail { flex-direction:column; }
+  .right { max-width:100%; }
+}
+</style>
+
 </head>
 
 <body>
@@ -90,10 +137,15 @@ input, select, button { padding:8px; background:#1a1a1a; color:#fff; border:none
 <input id="search" placeholder="Ara...">
 <select id="tierFilter">
 <option value="">Tier</option>
-<option>T1</option><option>T2</option><option>T3</option><option>T4</option><option>T5</option>
+<option>T1</option>
+<option>T2</option>
+<option>T3</option>
+<option>T4</option>
+<option>T5</option>
 </select>
-<button onclick="showFavs()">Favoriler</button>
 </div>
+
+<!-- GRID -->
 
 <div class="unit-grid">
 
@@ -101,7 +153,7 @@ input, select, button { padding:8px; background:#1a1a1a; color:#fff; border:none
 data-name="Vareng Muhafızı"
 data-tier="T5"
 data-best="Ön safta tank"
-data-basic="HP artıran doktrin"
+data-basic="HP doktrin"
 data-master="Hasar azaltma"
 data-hero="Uzun savaş"
 data-dmg="90" data-hp="95" data-spd="40"
@@ -114,10 +166,10 @@ data-img="varangian_guards_main.png">
 <div class="unit t4" data-id="berserker"
 data-name="Berserker"
 data-tier="T4"
-data-best="Flank ve burst"
-data-basic="Hasar artır"
-data-master="Crit odaklı"
-data-hero="Kill odaklı"
+data-best="Flank"
+data-basic="Hasar"
+data-master="Crit"
+data-hero="Kill"
 data-dmg="95" data-hp="60" data-spd="80"
 data-img="berserker_main.png">
 <img src="berserker_main.png">
@@ -128,9 +180,9 @@ data-img="berserker_main.png">
 <div class="unit t3" data-id="yeniceri"
 data-name="Yeniçeri"
 data-tier="T3"
-data-best="Orta oyun dengeli"
-data-basic="Defans + hasar"
-data-master="Denge build"
+data-best="Dengeli"
+data-basic="Defans"
+data-master="Denge"
 data-hero="Uzun kullanım"
 data-dmg="70" data-hp="70" data-spd="60"
 data-img="janissary_main.png">
@@ -142,10 +194,10 @@ data-img="janissary_main.png">
 <div class="unit t2" data-id="kargili"
 data-name="Kargılı Milis"
 data-tier="T2"
-data-best="Koridor savunma"
-data-basic="HP artır"
-data-master="Savunma build"
-data-hero="XP farm"
+data-best="Savunma"
+data-basic="HP"
+data-master="Block"
+data-hero="XP"
 data-dmg="50" data-hp="80" data-spd="40"
 data-img="pk_mil_pre.png">
 <img src="pk_mil_pre.png">
@@ -157,57 +209,53 @@ data-img="pk_mil_pre.png">
 data-name="Martelletore"
 data-tier="T1"
 data-best="Erken oyun"
-data-basic="Ucuz build"
+data-basic="Ucuz"
 data-master="Gerek yok"
 data-hero="Yeni oyuncu"
 data-dmg="30" data-hp="40" data-spd="50"
-data-img="martella.png">
-<img src="martella.png">
+data-img="martellatore_main.png">
+<img src="martellatore_main.png">
 <div class="tier t1">T1</div>
 <div class="fav">☆</div>
+</div>
 
 </div>
 
+<!-- DETAIL -->
+
 <div class="detail">
 
-  <div class="left">
-    <h2 id="dName"></h2>
-    <p id="dTier"></p>
+<div class="left">
+<h2 id="dName">Birlik seç</h2>
+<p id="dTier"></p>
 
-    <h4>En iyi kullanım</h4>
-    <p id="dBest"></p>
+<div class="section">
+<h4>En iyi kullanım</h4>
+<p id="dBest"></p>
+</div>
 
-    <h4>Basit Doktrin</h4>
-    <p id="dBasic"></p>
+<div class="section">
+<h4>Basit Doktrin</h4>
+<p id="dBasic"></p>
+</div>
 
-    <h4>Usta Doktrin</h4>
-    <p id="dMaster"></p>
+<div class="section">
+<h4>Usta Doktrin</h4>
+<p id="dMaster"></p>
+</div>
 
-    <h4>Gazilik</h4>
-    <p id="dHero"></p>
-  </div>
+<div class="section">
+<h4>Gazilik</h4>
+<p id="dHero"></p>
+</div>
 
-  <div class="right">
-    <img id="dImg">
-
-    <div>
-      Hasar
-      <div class="bar"><div id="dmg" class="fill"></div></div>
-
-      Dayanıklılık
-      <div class="bar"><div id="hp" class="fill"></div></div>
-
-      Hız
-      <div class="bar"><div id="spd" class="fill"></div></div>
-    </div>
-  </div>
 </div>
 
 <div class="right">
 <img id="dImg">
 
-<div class="stat">
 Hasar
+
 <div class="bar"><div id="dmg" class="fill"></div></div>
 
 Dayanıklılık
@@ -217,7 +265,6 @@ Dayanıklılık
 Hız
 
 <div class="bar"><div id="spd" class="fill"></div></div>
-</div>
 
 </div>
 
@@ -227,7 +274,6 @@ Hız
 
 <script>
 const units=document.querySelectorAll(".unit");
-let favs=JSON.parse(localStorage.getItem("favs"))||[];
 
 units.forEach(u=>{
 u.onclick=()=>{
@@ -236,40 +282,30 @@ u.classList.add("selected");
 
 dName.innerText=u.dataset.name;
 dTier.innerText=u.dataset.tier;
-
 dBest.innerText=u.dataset.best;
 dBasic.innerText=u.dataset.basic;
 dMaster.innerText=u.dataset.master;
 dHero.innerText=u.dataset.hero;
 
 dImg.src=u.dataset.img;
-
 dmg.style.width=u.dataset.dmg+"%";
 hp.style.width=u.dataset.hp+"%";
 spd.style.width=u.dataset.spd+"%";
 };
+});
 
-u.querySelector(".fav").onclick=(e)=>{
-e.stopPropagation();
-const id=u.dataset.id;
-favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];
-localStorage.setItem("favs",JSON.stringify(favs));
-updateFav();
+search.oninput=()=>{
+const s=search.value.toLowerCase();
+units.forEach(u=>{
+u.style.display=u.dataset.name.toLowerCase().includes(s)?"block":"none";
+});
 };
-});
 
-function updateFav(){
+tierFilter.onchange=()=>{
 units.forEach(u=>{
-u.querySelector(".fav").innerText=favs.includes(u.dataset.id)?"★":"☆";
+u.style.display=!tierFilter.value||u.dataset.tier===tierFilter.value?"block":"none";
 });
-}
-updateFav();
-
-function showFavs(){
-units.forEach(u=>{
-u.style.display=favs.includes(u.dataset.id)?"block":"none";
-});
-}
+};
 </script>
 
 </body>
