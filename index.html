@@ -26,18 +26,33 @@ input, select, button { padding:8px; background:#1a1a1a; color:#fff; border:none
 
 .fav { position:absolute; top:5px; right:5px; }
 
-/* WIKI LAYOUTU */
-.detail {
-  margin-top:20px;
-  background:#161616;
-  border-radius:10px;
-  padding:20px;
-  display:flex;
-  gap:30px;
+.unit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px;
+  margin-bottom: 30px;
 }
 
-.left { flex:2; }
-.right { flex:1; }
+/* DETAY FULL GENİŞLİK */
+.detail {
+  width: 100%;
+  background: #161616;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  gap: 40px;
+}
+
+/* SOL METİN */
+.left {
+  flex: 2;
+}
+
+/* SAĞ PANEL */
+.right {
+  flex: 1;
+  max-width: 300px;
+}
 
 .section { margin-bottom:15px; }
 .section h4 { margin:0 0 5px 0; color:#aaa; }
@@ -46,9 +61,23 @@ input, select, button { padding:8px; background:#1a1a1a; color:#fff; border:none
 .bar { height:8px; background:#333; margin:5px 0; }
 .fill { height:100%; background:#2ecc71; }
 
-.right img { width:100%; border-radius:6px; }
-</style>
+.right img {
+  width: 100%;
+  max-width: 250px;
+  display: block;
+  margin-bottom: 15px;
+}
 
+.bar {
+  height: 8px;
+  background: #333;
+  margin-bottom: 10px;
+}
+
+.fill {
+  height: 100%;
+  background: #2ecc71;
+}
 </head>
 
 <body>
@@ -141,30 +170,37 @@ data-img="martella.png">
 
 <div class="detail">
 
-<div class="left">
-<h2 id="dName">Birlik seç</h2>
-<p id="dTier"></p>
+  <div class="left">
+    <h2 id="dName"></h2>
+    <p id="dTier"></p>
 
-<div class="section">
-<h4>En iyi kullanım</h4>
-<p id="dBest"></p>
-</div>
+    <h4>En iyi kullanım</h4>
+    <p id="dBest"></p>
 
-<div class="section">
-<h4>Basit Doktrin</h4>
-<p id="dBasic"></p>
-</div>
+    <h4>Basit Doktrin</h4>
+    <p id="dBasic"></p>
 
-<div class="section">
-<h4>Usta Doktrin</h4>
-<p id="dMaster"></p>
-</div>
+    <h4>Usta Doktrin</h4>
+    <p id="dMaster"></p>
 
-<div class="section">
-<h4>Gazilik</h4>
-<p id="dHero"></p>
-</div>
+    <h4>Gazilik</h4>
+    <p id="dHero"></p>
+  </div>
 
+  <div class="right">
+    <img id="dImg">
+
+    <div>
+      Hasar
+      <div class="bar"><div id="dmg" class="fill"></div></div>
+
+      Dayanıklılık
+      <div class="bar"><div id="hp" class="fill"></div></div>
+
+      Hız
+      <div class="bar"><div id="spd" class="fill"></div></div>
+    </div>
+  </div>
 </div>
 
 <div class="right">
