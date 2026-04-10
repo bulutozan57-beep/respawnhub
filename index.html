@@ -10,8 +10,8 @@
 body { margin:0; font-family:Arial; background:#0b0b0b; color:#fff; }
 .container { max-width:1100px; margin:auto; padding:20px; }
 
-.controls { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
-input, select, button { padding:8px; background:#1a1a1a; color:#fff; border:none; cursor:pointer; }
+.controls { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+input, select, button { padding:8px; background:#1a1a1a; color:#fff; border:none; }
 
 .unit-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:10px; }
 
@@ -26,55 +26,36 @@ input, select, button { padding:8px; background:#1a1a1a; color:#fff; border:none
 
 .fav { position:absolute; top:5px; right:5px; }
 
-.preview {
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  background:rgba(0,0,0,0.8);
-  font-size:12px;
-  padding:5px;
-  opacity:0;
-  transition:0.2s;
-}
-.unit:hover .preview { opacity:1; }
-
-.best { background:#161616; padding:15px; border-radius:8px; margin-bottom:20px; }
-
+/* WIKI LAYOUT */
 .detail {
   margin-top:20px;
   background:#161616;
   border-radius:10px;
   padding:20px;
   display:flex;
-  gap:20px;
-  position:sticky;
-  top:10px;
+  gap:30px;
 }
 
-.detail img { width:200px; }
+.left { flex:2; }
+.right { flex:1; }
 
+.section { margin-bottom:15px; }
+.section h4 { margin:0 0 5px 0; color:#aaa; }
+
+.stat { margin-top:10px; }
 .bar { height:8px; background:#333; margin:5px 0; }
 .fill { height:100%; background:#2ecc71; }
 
-.small { font-size:12px; color:#aaa; }
-
-.rec { margin-top:10px; display:flex; gap:10px; }
-.rec div { background:#222; padding:5px; cursor:pointer; }
-
+.right img { width:100%; border-radius:6px; }
 </style>
 
 </head>
 
 <body>
+
 <div class="container">
 
 <h1>Unit Kataloğu</h1>
-
-<div class="best">
-<h3>En İyi Kullanım</h3>
-<p id="dBest">Birlik seç.</p>
-</div>
 
 <div class="controls">
 <input id="search" placeholder="Ara...">
@@ -82,136 +63,114 @@ input, select, button { padding:8px; background:#1a1a1a; color:#fff; border:none
 <option value="">Tier</option>
 <option>T1</option><option>T2</option><option>T3</option><option>T4</option><option>T5</option>
 </select>
-<select id="sort">
-<option value="">Sırala</option>
-<option value="tier">Tier</option>
-<option value="name">İsim</option>
-</select>
 <button onclick="showFavs()">Favoriler</button>
 </div>
 
-<div class="unit-grid" id="grid">
+<div class="unit-grid">
 
-<!-- UNIT TEMPLATE -->
-
-<div class="unit t5" data-id="vareng" data-name="Vareng Muhafızı" data-tier="T5"
-data-desc="Tank elit" data-best="Ön safta tank"
+<div class="unit t5" data-id="vareng"
+data-name="Vareng Muhafızı"
+data-tier="T5"
+data-best="Ön safta tank"
+data-basic="HP artıran doktrin"
+data-master="Hasar azaltma ve block"
+data-hero="Uzun savaşlarda XP"
 data-dmg="90" data-hp="95" data-spd="40"
-data-pros="Çok dayanıklı" data-cons="Yavaş"
 data-img="varangian_guards_main.png">
-<img src="varangian_guards_main.png" loading="lazy">
+<img src="varangian_guards_main.png">
 <div class="tier t5">T5</div>
 <div class="fav">☆</div>
-<div class="preview">Tank elit</div>
 </div>
 
-<div class="unit t4" data-id="berserker" data-name="Berserker" data-tier="T4"
-data-desc="Agresif hasar" data-best="Flank"
+<div class="unit t4" data-id="berserker"
+data-name="Berserker"
+data-tier="T4"
+data-best="Flank ve burst"
+data-basic="Hasar artır"
+data-master="Crit + saldırı"
+data-hero="Kill odaklı"
 data-dmg="95" data-hp="60" data-spd="80"
-data-pros="Yüksek hasar" data-cons="Dayanıksız"
 data-img="berserker_main.png">
 <img src="berserker_main.png">
 <div class="tier t4">T4</div>
 <div class="fav">☆</div>
-<div class="preview">Agresif</div>
-</div>
-
-<div class="unit t3" data-id="yeniceri" data-name="Yeniçeri" data-tier="T3"
-data-desc="Dengeli" data-best="Orta oyun"
-data-dmg="70" data-hp="70" data-spd="60"
-data-pros="Dengeli" data-cons="Özel değil"
-data-img="janissary_main.png">
-<img src="janissary_main.png">
-<div class="tier t3">T3</div>
-<div class="fav">☆</div>
-<div class="preview">Dengeli</div>
-</div>
-
-<div class="unit t2" data-id="kargili" data-name="Kargılı Milis" data-tier="T2"
-data-desc="Savunma" data-best="Koridor"
-data-dmg="50" data-hp="80" data-spd="40"
-data-pros="Savunma" data-cons="Hasar düşük"
-data-img="pk_mil_pre.png">
-<img src="pk_mil_pre.png">
-<div class="tier t2">T2</div>
-<div class="fav">☆</div>
-<div class="preview">Savunma</div>
-</div>
-
-<div class="unit t1" data-id="martelletore" data-name="Martelletore" data-tier="T1"
-data-desc="Başlangıç" data-best="Erken oyun"
-data-dmg="30" data-hp="40" data-spd="50"
-data-pros="Ucuz" data-cons="Zayıf"
-data-img="martellatore_main.png">
-<img src="martellatore_main.png">
-<div class="tier t1">T1</div>
-<div class="fav">☆</div>
-<div class="preview">Başlangıç</div>
 </div>
 
 </div>
 
 <div class="detail">
-<img id="dImg">
-<div>
-<h2 id="dName"></h2>
-<div id="dTier"></div>
 
-<p id="dDesc"></p>
+<div class="left">
+<h2 id="dName">Birlik seç</h2>
+<p id="dTier"></p>
 
-<div class="small">Hasar</div>
-<div class="bar"><div id="dmg" class="fill"></div></div>
+<div class="section">
+<h4>En iyi kullanım</h4>
+<p id="dBest"></p>
+</div>
 
-<div class="small">Dayanıklılık</div>
-<div class="bar"><div id="hp" class="fill"></div></div>
+<div class="section">
+<h4>Basit Doktrin</h4>
+<p id="dBasic"></p>
+</div>
 
-<div class="small">Hız</div>
-<div class="bar"><div id="spd" class="fill"></div></div>
+<div class="section">
+<h4>Usta Doktrin</h4>
+<p id="dMaster"></p>
+</div>
 
-<p><b>Artı:</b> <span id="pros"></span></p>
-<p><b>Eksi:</b> <span id="cons"></span></p>
-
-<button onclick="copyLink()">Link Kopyala</button>
-
-<div class="rec" id="rec"></div>
+<div class="section">
+<h4>Gazilik</h4>
+<p id="dHero"></p>
+</div>
 
 </div>
+
+<div class="right">
+<img id="dImg">
+
+<div class="stat">
+Hasar
+<div class="bar"><div id="dmg" class="fill"></div></div>
+
+Dayanıklılık
+
+<div class="bar"><div id="hp" class="fill"></div></div>
+
+Hız
+
+<div class="bar"><div id="spd" class="fill"></div></div>
+</div>
+
+</div>
+
 </div>
 
 </div>
 
 <script>
-const units = [...document.querySelectorAll(".unit")];
-let favs = JSON.parse(localStorage.getItem("favs"))||[];
-let last = JSON.parse(localStorage.getItem("last"))||[];
+const units=document.querySelectorAll(".unit");
+let favs=JSON.parse(localStorage.getItem("favs"))||[];
 
-function select(u){
+units.forEach(u=>{
+u.onclick=()=>{
 units.forEach(x=>x.classList.remove("selected"));
 u.classList.add("selected");
 
 dName.innerText=u.dataset.name;
 dTier.innerText=u.dataset.tier;
-dDesc.innerText=u.dataset.desc;
-dImg.src=u.dataset.img;
+
 dBest.innerText=u.dataset.best;
+dBasic.innerText=u.dataset.basic;
+dMaster.innerText=u.dataset.master;
+dHero.innerText=u.dataset.hero;
+
+dImg.src=u.dataset.img;
 
 dmg.style.width=u.dataset.dmg+"%";
 hp.style.width=u.dataset.hp+"%";
 spd.style.width=u.dataset.spd+"%";
-
-pros.innerText=u.dataset.pros;
-cons.innerText=u.dataset.cons;
-
-history.replaceState(null,"","?unit="+u.dataset.id);
-
-last=[u.dataset.id,...last.filter(x=>x!==u.dataset.id)].slice(0,3);
-localStorage.setItem("last",JSON.stringify(last));
-
-recommend(u);
-}
-
-units.forEach(u=>{
-u.onclick=()=>select(u);
+};
 
 u.querySelector(".fav").onclick=(e)=>{
 e.stopPropagation();
@@ -229,52 +188,10 @@ u.querySelector(".fav").innerText=favs.includes(u.dataset.id)?"★":"☆";
 }
 updateFav();
 
-search.oninput=filter;
-tierFilter.onchange=filter;
-
-function filter(){
-const s=search.value.toLowerCase();
-units.forEach(u=>{
-u.style.display=(u.dataset.name.toLowerCase().includes(s) &&
-(!tierFilter.value||u.dataset.tier===tierFilter.value))?"block":"none";
-});
-}
-
 function showFavs(){
 units.forEach(u=>{
 u.style.display=favs.includes(u.dataset.id)?"block":"none";
 });
-}
-
-sort.onchange=()=>{
-const val=sort.value;
-const sorted=[...units].sort((a,b)=>{
-if(val==="name") return a.dataset.name.localeCompare(b.dataset.name);
-if(val==="tier") return b.dataset.tier.localeCompare(a.dataset.tier);
-});
-sorted.forEach(el=>grid.appendChild(el));
-};
-
-function copyLink(){
-navigator.clipboard.writeText(location.href);
-}
-
-function recommend(u){
-rec.innerHTML="";
-units.filter(x=>x!==u && x.dataset.tier===u.dataset.tier)
-.slice(0,2)
-.forEach(x=>{
-const d=document.createElement("div");
-d.innerText=x.dataset.name;
-d.onclick=()=>select(x);
-rec.appendChild(d);
-});
-}
-
-const p=new URLSearchParams(location.search).get("unit");
-if(p){
-const el=units.find(x=>x.dataset.id===p);
-if(el) select(el);
 }
 </script>
 
