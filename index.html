@@ -10,84 +10,107 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #0b0b0b;
+  background: #0b0b0b;
   color: #fff;
 }
 
+/* HEADER */
 header {
-  padding: 60px 20px;
-  text-align: center;
-  background: linear-gradient(to right, #000, #1a1a1a);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #111;
 }
 
-h1 {
-  margin: 0;
-  font-size: 36px;
+.logo {
+  font-size: 24px;
+  font-weight: bold;
 }
 
-.subtitle {
+nav a {
   color: #aaa;
-  margin-top: 10px;
+  margin-left: 20px;
+  text-decoration: none;
 }
 
+nav a:hover {
+  color: #fff;
+}
+
+/* LAYOUT */
 .container {
-  max-width: 1100px;
+  display: flex;
+  max-width: 1200px;
   margin: auto;
   padding: 20px;
-}
-
-.section {
-  margin-top: 40px;
-}
-
-.videos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 20px;
 }
 
-.card {
+.main {
+  flex: 3;
+}
+
+.sidebar {
+  flex: 1;
+}
+
+/* UNIT SCROLL */
+.unit-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-bottom: 30px;
+}
+
+.unit-card {
+  min-width: 100px;
+  height: 100px;
+  background: #1a1a1a;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 12px;
+}
+
+/* ARTICLES */
+.article {
   background: #161616;
-  border-radius: 10px;
-  overflow: hidden;
-  transition: 0.2s;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
 }
 
-.card:hover {
-  transform: scale(1.03);
+.article h3 {
+  margin: 0 0 10px 0;
 }
 
-iframe {
-  width: 100%;
-  height: 200px;
-  border: none;
+.article p {
+  color: #bbb;
 }
 
-.card p {
-  padding: 10px;
-  margin: 0;
+/* SIDEBAR */
+.widget {
+  background: #161616;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
 }
 
-.buttons {
-  text-align: center;
-  margin-top: 40px;
+.widget h4 {
+  margin-top: 0;
 }
 
 .btn {
-  display: inline-block;
-  margin: 10px;
-  padding: 12px 24px;
-  text-decoration: none;
-  color: white;
-  border-radius: 6px;
-}
-
-.youtube {
-  background: #cc0000;
-}
-
-.discord {
+  display: block;
   background: #5865F2;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px;
+  text-decoration: none;
 }
 </style>
 
@@ -96,46 +119,63 @@ iframe {
 <body>
 
 <header>
-  <h1>Respawn Hub Türkiye</h1>
-  <p class="subtitle">Rehber. İnceleme. Gerçek deneyim.</p>
+  <div class="logo">Respawn Hub</div>
+  <nav>
+    <a href="#">Ana Sayfa</a>
+    <a href="#">Rehber</a>
+    <a href="#">İnceleme</a>
+    <a href="#">Meta Dışı</a>
+  </nav>
 </header>
 
 <div class="container">
 
-  <div class="section">
-    <h2>Son Videolar</h2>
+  <div class="main">
 
 ```
-<div class="videos">
+<h2>Birim Kataloğu</h2>
 
-  <div class="card">
-    <iframe src="https://www.youtube.com/embed/PflTdp4-69A"></iframe>
-    <p>Kanal Güncellemesi ve Planlar</p>
-  </div>
+<div class="unit-scroll">
+  <div class="unit-card">Unit 1</div>
+  <div class="unit-card">Unit 2</div>
+  <div class="unit-card">Unit 3</div>
+  <div class="unit-card">Unit 4</div>
+  <div class="unit-card">Unit 5</div>
+  <div class="unit-card">Unit 6</div>
+</div>
 
-  <div class="card">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID_2"></iframe>
-    <p>Meta Dışı Birlik İncelemesi</p>
-  </div>
+<div class="article">
+  <h3>Mızrak Build Rehberi</h3>
+  <p>En güncel mızrak build detayları ve kullanım önerileri.</p>
+</div>
 
-  <div class="card">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID_3"></iframe>
-    <p>Silah Rehberi</p>
-  </div>
-
+<div class="article">
+  <h3>Meta Dışı Birlik İncelemesi</h3>
+  <p>Az kullanılan ama güçlü birliklerin detaylı analizi.</p>
 </div>
 ```
 
   </div>
 
-  <div class="section">
-    <h2>Ne Bulacaksın</h2>
-    <p>Conqueror's Blade rehberleri, meta analizleri, unit incelemeleri ve gerçek oyuncu deneyimleri.</p>
-  </div>
+  <div class="sidebar">
 
-  <div class="buttons">
-    <a href="https://www.youtube.com/@RespawnHubTR" class="btn youtube" target="_blank">YouTube Kanalı</a>
-    <a href="https://discord.gg/e2bSpXCkbn" class="btn discord" target="_blank">Discord</a>
+```
+<div class="widget">
+  <h4>Popüler İçerikler</h4>
+  <p>En çok okunan rehberler</p>
+</div>
+
+<div class="widget">
+  <h4>Haftanın Build'i</h4>
+  <p>Öne çıkan setup</p>
+</div>
+
+<div class="widget">
+  <h4>Topluluk</h4>
+  <a href="https://discord.gg/e2bSpXCkbn" class="btn">Discord'a Katıl</a>
+</div>
+```
+
   </div>
 
 </div>
